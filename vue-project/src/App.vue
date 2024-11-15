@@ -14,12 +14,10 @@ export default {
 
 <template>
 <!-- Template definiert HTML-Struktur der Haupt-App-Komponente -->
-    <div id="app">
-      <!-- Überschrift für die Anwendung -->
-    <h1>To-Do Liste</h1>
+  <div id="app">
     <!-- Einfügen der ToDoList-Komponente, die To-Do-Aufgaben verwaltet -->
     <ToDoList />
-    </div>
+  </div>
 </template>
 
 
