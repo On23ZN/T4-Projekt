@@ -18,7 +18,7 @@ export default {
       toDos: []
     };
   },
-
+}
   // Methoden zur Verwaltung der Aufgaben
   methods: {
     // Methode zum Hinzufügen einer neuen Aufgabe
@@ -32,6 +32,12 @@ export default {
       }
     },
 
+      // Methode zum Löschen einer Aufgabe basierend auf dem Index
+    deleteToDo(index) {
+      // Entfernt die Aufgabe aus dem Array
+      this.todos.splice(index, 1);
+    }
   }
+
 </script>
 
