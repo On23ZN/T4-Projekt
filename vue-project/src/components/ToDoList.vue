@@ -52,12 +52,16 @@ export default {
     <button @click="addToDo">Hinzufügen</button>
 
     <!-- Liste aller Aufgaben, jede Aufgabe wird als ToDoItem-Komponente dargestellt -->
+    <!-- Iteration über alle Aufgaben -->
+     <!-- Einzigartiger Schlüssel für jedes Element in der Liste -->
+     <!-- Übergibt die aktuelle Aufgabe als Prop an die ToDoItem-Komponente -->
+     <!-- Event zum Löschen einer Aufgabe -->
     <ul>
       <ToDoItem
-        v-for="(todo, index) in todos" <!-- Iteration über alle Aufgaben -->
-        :key="index" <!-- Einzigartiger Schlüssel für jedes Element in der Liste -->
-        :todo="todo" <!-- Übergibt die aktuelle Aufgabe als Prop an die ToDoItem-Komponente -->
-        @deleteToDo="deleteToDo(index)" <!-- Event zum Löschen einer Aufgabe -->
+        v-for="(todo, index) in todos" 
+        :key="index" 
+        :todo="todo" 
+        @deleteToDo="deleteToDo(index)" 
       />
     </ul>
   </div>
