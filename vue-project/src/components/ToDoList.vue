@@ -41,3 +41,26 @@ export default {
 
 </script>
 
+<template>
+  <!-- Hauptcontainer der To-Do-Liste -->
+  <div>
+    <!-- Eingabefeld für neue Aufgaben -->
+    <input 
+      v-model="newToDo" 
+      placeholder="Neue Aufgabe hinzufügen" 
+      @keyup.enter="addToDo" 
+    />
+    <!-- Button zum Hinzufügen einer neuen Aufgabe -->
+    <button @click="addToDo">Hinzufügen</button>
+
+    <!-- Liste aller Aufgaben, jede Aufgabe wird als ToDoItem-Komponente dargestellt -->
+    <ul>
+      <ToDoItem
+        v-for="(todo, index) in todos" <!-- Iteration über alle Aufgaben -->
+        :key="index" <!-- Einzigartiger Schlüssel für jedes Element in der Liste -->
+        :todo="todo" <!-- Übergibt die aktuelle Aufgabe als Prop an die ToDoItem-Komponente -->
+        @deleteToDo="deleteToDo(index)" <!-- Event zum Löschen einer Aufgabe -->
+      />
+    </ul>
+  </div>
+</template>
