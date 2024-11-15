@@ -17,3 +17,22 @@ export default {
   }
 };
 </script>
+
+<template>
+  <!-- Einzelnes Listenelement für eine Aufgabe -->
+  <li>
+    <!-- Text der Aufgabe, mit einem CSS-Klasse-Bindung, wenn die Aufgabe erledigt ist -->
+    <span :class="{ completed: todo.completed }">{{ todo.text }}</span>
+    <!-- Button zum Umschalten des Erledigt-Status -->
+    <button @click="switchComplete">Erledigt</button>
+    <!-- Button zum Löschen der Aufgabe, löst ein benutzerdefiniertes Event aus -->
+    <button @click="$emit('deleteToDo')">Löschen</button>
+  </li>
+</template>
+
+<style>
+/* CSS-Klasse für erledigte Aufgaben */
+.completed {
+  text-decoration: line-through; /* Durchstreichen des Textes */
+}
+</style>
