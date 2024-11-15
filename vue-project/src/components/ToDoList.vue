@@ -18,6 +18,20 @@ export default {
       toDos: []
     };
   },
-}
+
+  // Methoden zur Verwaltung der Aufgaben
+  methods: {
+    // Methode zum Hinzufügen einer neuen Aufgabe
+    addToDo() {
+      // Überprüft, ob die Eingabe nicht leer ist
+      if (this.newToDo.trim() !== '') {
+        // Fügt eine neue Aufgabe zum Array hinzu
+        this.todos.push({ text: this.newToDo, completed: false });
+        // Leert das Eingabefeld
+        this.newToDo = '';
+      }
+    },
+
+  }
 </script>
 
