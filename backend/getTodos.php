@@ -23,4 +23,9 @@ if ($result->num_rows > 0) {
     }
 }
 
+// JSON-Ausgabe der Aufgaben
+echo json_encode($todos);
+
+$conn->close();
+
 ?>
