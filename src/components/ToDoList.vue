@@ -73,9 +73,38 @@ export default {
       }
     }  
     // Methode zum Löschen einer Aufgabe basierend auf dem Index
-    deleteToDo(index) {
-      // Entfernt die Aufgabe aus dem Array
-      this.todos.splice(index, 1);
+    async deleteToDo(index) {
+      // Hole die Aufgabe, die gelöscht werden soll 
+      const todo = this.todos[index]; 
+      try {
+        // Sende eine POST-Anfrage an das Backend, um die Aufgabe zu löschen 
+        const response = await fetch('http://localhost/T4-Projekt/backend/deleteTodo.php', {
+          method: 'POST', 
+          headers: {
+             'Content-Type': 'application/x-www-form-urlencoded'  
+          },
+          body: new URLSearchParams({ id: todo.id }) 
+        });
+
+        // Überprüfe, ob die Antwort erfolgreich war 
+        if (!response.ok) { 
+          throw new Error('Netzwerkantwort war nicht ok'); 
+        }
+
+        // Wandle die Antwort in JSON um 
+        const data = await response.json();
+
+        // Überprüfe, ob die Aufgabe erfolgreich gelöscht wurde 
+        if (data.message) {
+          // Erfolg: Aufgabe aus der Liste entfernen
+          this.todos.splice(index, 1); 
+        } else {
+          console.error(data.error); // Fehlerbehandlung 
+        }
+      } catch (error) {
+        // Fehlerbehandlung: Fehlermeldung in der Konsole 
+        console.error('Fehler:', error); 
+      } 
     }
   }
   mounted() {
