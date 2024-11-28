@@ -21,33 +21,41 @@ export default {
   // Methoden zur Verwaltung der Aufgaben
   methods: {
     // Methode zum Hinzufügen einer neuen Aufgabe
-    addToDo() {
+    async addToDo() {
       // Überprüft, ob die Eingabe nicht leer ist
       if (this.newToDo.trim() !== '') {
-         // Verwende fetch, um eine POST-Anfrage an das Backend zu senden
-        fetch('http://localhost/T4-Projekt/backend/createTodo.php', {
+        try {
+         // Sende eine POST-Anfrage an das Backend, um eine neue Aufgabe zu erstellen
+         const response = await fetch('http://localhost/T4-Projekt/backend/createTodo.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
           body: new URLSearchParams({ title: this.newTodo })
-        })
-        .then(response => response.json()) // Antwort in JSON umwandeln
-        .then(data => {
-          if (data.message) {
-            // Fügt eine neue Aufgabe zum Array hinzu
-            this.todos.push({ text: this.newToDo, completed: false });
-            // Leert das Eingabefeld
-            this.newToDo = '';
-          } else {
-            console.error(data.error); // Fehlerbehandlung
-          }
-        })
-        .catch(error => console.error('Fehler:', error));
+        });
+        // Überprüfe, ob die Antwort erfolgreich war
+        if (!response.ok) {
+          throw new Error('Netzwerkantwort war nicht ok');
+        }
+        // Wandle die Antwort in JSON um
+        const data = await response.json();
+        // Überprüfe, ob die Aufgabe erfolgreich erstellt wurde
+        if (data.message) {
+          // Fügt eine neue Aufgabe zur Liste hinzu
+          this.todos.push({ text: this.newToDo, completed: false });
+          // Leert das Eingabefeld
+          this.newToDo = '';
+        } else {
+          console.error(data.error); // Fehlerbehandlung
+        }
+      } catch (error) {
+        // Fehlerbehandlung: Fehlermeldung in der Konsole 
+        console.error('Fehler:', error);
+        }
       }
     },
     //Methode zum abrufen der Aufgabenliste
-    async getTodos() {
+    async getToDos() {
       try {
         // Get-Anfrage an Backend senden, um die Aufgabe abzurufen
         const response = await fetch('http://localhost/T4-Projekt/backend/getTodos.php');
