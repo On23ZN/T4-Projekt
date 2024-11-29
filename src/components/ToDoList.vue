@@ -55,7 +55,7 @@ export default {
       }
     },
     //Methode zum abrufen der Aufgabenliste
-    async getToDos() {
+    async getTodos() {
       try {
         // Get-Anfrage an Backend senden, um die Aufgabe abzurufen
         const response = await fetch('http://localhost/T4-Projekt/backend/getTodos.php');
@@ -74,8 +74,17 @@ export default {
     },  
     // Methode zum Löschen einer Aufgabe basierend auf dem Index
     async deleteToDo(index) {
+      console.log('Index:', index);
       // Hole die Aufgabe, die gelöscht werden soll 
       const todo = this.todos[index]; 
+      console.log('To-Do-Element:', todo);
+
+      // Überprüfe, ob `todo` definiert ist 
+      if (!todo) { 
+        console.error('To-Do-Element nicht gefunden'); 
+        return; 
+      }
+
       try {
         // Sende eine POST-Anfrage an das Backend, um die Aufgabe zu löschen 
         const response = await fetch('http://localhost/T4-Projekt/backend/deleteTodo.php', {
@@ -134,7 +143,7 @@ export default {
     <ul>
       <ToDoItem
         v-for="(todo, index) in todos" 
-        :key="index" 
+        :key="todo.id" 
         :todo="todo" 
         @deleteToDo="deleteToDo(index)" 
       />
