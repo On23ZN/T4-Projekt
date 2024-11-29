@@ -17,6 +17,10 @@ if ($conn->connect_error) {
 $id = $_POST['id'] ?? '';
 $completed = $_POST['completed'] ?? '';
 
+// Debugging: Ausgabe der empfangenen Daten 
+error_log("Empfangene ID: " . $id); 
+error_log("Empfangener Status: " . $completed);
+
 if (!empty($id)) {
     $stmt = $conn->prepare("UPDATE todos SET completed = ? WHERE id = ?");
     $stmt->bind_param("ii", $completed, $id);
