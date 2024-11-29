@@ -15,7 +15,7 @@ export default {
       // Die neue Aufgabe, die der Benutzer eingeben kann
       newToDo: '',
       // Array, das alle Aufgaben speichert
-      toDos: []
+      todos: []
     };
   },
   // Methoden zur Verwaltung der Aufgaben
@@ -31,7 +31,7 @@ export default {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: new URLSearchParams({ title: this.newTodo })
+          body: new URLSearchParams({ title: this.newToDo })
         });
         // Überprüfe, ob die Antwort erfolgreich war
         if (!response.ok) {
@@ -146,6 +146,7 @@ export default {
         :key="todo.id" 
         :todo="todo" 
         @deleteToDo="deleteToDo(index)" 
+        @toggleComplete="toggleComplete(todo.id, !todo.completed)"
       />
     </ul>
   </div>
