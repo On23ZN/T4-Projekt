@@ -1,5 +1,6 @@
 <?php
 // Verbindung zur Datenbank herstellen
+header('Content-Type: application/json');
 $servername = "localhost";
 $username = "root";
 $password = "";
