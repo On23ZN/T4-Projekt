@@ -9,10 +9,26 @@ export default {
   },
   // Methoden, um die Aufgabe zu verwalten
   methods: {
-    // Methode zum Umschalten des Erledigt-Status
-    switchComplete() {
-      // Ändert den Status der Aufgabe (true/false)
-      this.todo.completed = !this.todo.completed;
+    async toggleComplete() {
+      try {
+        const response = await fetch('http://localhost/T4-Projekt/backend/updateTodo.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({ id: this.todo.id, completed: this.todo.completed ? 0 : 1 })
+        });
+
+        const data = await response.json();
+
+        if (data.message) {
+          this.todo.completed = !this.todo.completed; // Status umschalten
+        } else {
+          console.error(data.error); // Fehlerbehandlung
+        }
+      } catch (error) {
+        console.error('Fehler:', error);
+      }
     }
   }
 };
@@ -24,7 +40,7 @@ export default {
     <!-- Text der Aufgabe, mit einem CSS-Klasse-Bindung, wenn die Aufgabe erledigt ist -->
     <span :class="{ completed: todo.completed }">{{ todo.text }}</span>
     <!-- Button zum Umschalten des Erledigt-Status -->
-    <button @click="switchComplete">Erledigt</button>
+    <button @click="toggleComplete">Erledigt</button>
     <!-- Button zum Löschen der Aufgabe, löst ein benutzerdefiniertes Event aus -->
     <button @click="$emit('deleteToDo')">Löschen</button>
   </li>
