@@ -71,7 +71,7 @@ export default {
         // Fehlerbehandlung: Fehlermeldung in der Konsole
         console.error('Fehler beim Abrufen der Todos:', error);
       }
-    }  
+    },  
     // Methode zum Löschen einer Aufgabe basierend auf dem Index
     async deleteToDo(index) {
       // Hole die Aufgabe, die gelöscht werden soll 
@@ -106,7 +106,7 @@ export default {
         console.error('Fehler:', error); 
       } 
     }
-  }
+  },
   mounted() {
   // Aufgaben abrufen, wenn die Komponente geladen wird
   this.getTodos();
