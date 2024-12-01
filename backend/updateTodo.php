@@ -1,4 +1,5 @@
 <?php
+session_start(); // Session starten
 // Verbindung zur Datenbank herstellen
 header('Content-Type: application/json');
 $servername = "localhost";
@@ -16,14 +17,16 @@ if ($conn->connect_error) {
 // Eingabedaten aus der Anfrage holen
 $id = $_POST['id'] ?? '';
 $completed = $_POST['completed'] ?? '';
+$user_id = $_SESSION['user_id'];
 
 // Debugging: Ausgabe der empfangenen Daten 
 error_log("Empfangene ID: " . $id); 
 error_log("Empfangener Status: " . $completed);
 
-if (!empty($id)) {
-    $stmt = $conn->prepare("UPDATE todos SET completed = ? WHERE id = ?");
-    $stmt->bind_param("ii", $completed, $id);
+// Aufgabe in der Datenbank aktualisieren
+if (!empty($id) && ($completed === '0' || $completed === '1') && !empty($user_id)) {
+    $stmt = $conn->prepare("UPDATE todos SET completed = ? WHERE id = ? AND user_id = ?");
+    $stmt->bind_param("iii", $completed, $id, $user_id);
     if ($stmt->execute()) {
         echo json_encode(["message" => "Aufgabe aktualisiert"]);
     } else {
@@ -31,7 +34,7 @@ if (!empty($id)) {
     }
     $stmt->close();
 } else {
-    echo json_encode(["error" => "Ungültige ID"]);
+    echo json_encode(["error" => "Ungültige ID, Status oder Benutzer-ID"]);
 }
 
 $conn->close();
