@@ -15,7 +15,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Überprüfe die Verbindung zur Datenbank
 if ($conn->connect_error) {
-    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+    die(json_encode(["error" => "Verbindung fehlgeschlagen: " . $conn->connect_error]));
 }
 
 // Hole die Benutzereingaben aus der Anfrage
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Überprüfe das Passwort und starte die Session
     if (password_verify($password, $hashed_password)) {
         $_SESSION['user_id'] = $id;
-        echo json_encode(["message" => "Login erfolgreich"]);
+        echo json_encode(["message" => "Login erfolgreich", "user_id" => $id]);
     } else {
         echo json_encode(["error" => "Ungültige Anmeldedaten"]);
     }

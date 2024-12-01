@@ -9,6 +9,13 @@ export default {
   components: {
     ToDoItem
   },
+  // Empfangen der Benutzer-ID als Prop 
+  props: { 
+    userId: { 
+      type: Number, 
+      required: true
+    } 
+  },
   // Definieren des Datenmodells der Komponente
   data() {
     return {
@@ -25,13 +32,16 @@ export default {
       // Überprüft, ob die Eingabe nicht leer ist
       if (this.newToDo.trim() !== '') {
         try {
+          console.log('Benutzer-ID:', this.userId); // Benutzer-ID in der Konsole ausgeben 
+          console.log('Titel:', this.newToDo); // Titel in der Konsole ausgeben
+          
          // Sende eine POST-Anfrage an das Backend, um eine neue Aufgabe zu erstellen
          const response = await fetch('http://localhost/T4-Projekt/backend/createTodo.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: new URLSearchParams({ title: this.newToDo })
+          body: new URLSearchParams({ title: this.newToDo, user_id: this.userId })
         });
         // Überprüfe, ob die Antwort erfolgreich war
         if (!response.ok) {
@@ -46,14 +56,17 @@ export default {
           // Leert das Eingabefeld
           this.newToDo = '';
         } else {
-          console.error(data.error); // Fehlerbehandlung
+          console.error('Fehler beim Erstellen der Aufgabe:', data.error);
         }
       } catch (error) {
         // Fehlerbehandlung: Fehlermeldung in der Konsole 
         console.error('Fehler:', error);
-        }
       }
-    },
+      } else { 
+        console.error('Eingabe ist leer'); 
+      }
+      },
+    
     //Methode zum abrufen der Aufgabenliste
     async getTodos() {
       try {
@@ -66,7 +79,11 @@ export default {
         //Wandle die Antwort in JSON um
         const data = await response.json();
         //Aktualisieren der Aufgabenliste mit den empfangenen Daten
-        this.todos = data; 
+        if (Array.isArray(data)) {
+          this.todos = data; 
+        } else { 
+          console.error('Fehler beim Abrufen der Todos:', data.error || 'Ungültige Antwort'); 
+        }
       } catch (error) {
         // Fehlerbehandlung: Fehlermeldung in der Konsole
         console.error('Fehler beim Abrufen der Todos:', error);

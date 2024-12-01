@@ -25,6 +25,7 @@
           if (data.message) {
             alert('Login erfolgreich');
             this.$router.push('/todos');
+            this.$root.isLoggedIn = true; // Setze den Login-Status in der Hauptkomponente
           } else {
             alert('Fehler beim Login: ' + data.error);
           }
