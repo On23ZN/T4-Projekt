@@ -44,16 +44,62 @@
   </script>
 
   <template>
-    <div>
-      <h2>Registrieren</h2>
-      <form @submit.prevent="register">
-        <input v-model="username" placeholder="Benutzername" required />
-        <input v-model="password" type="password" placeholder="Passwort" required />
-        <input v-model="firstName" placeholder="Vorname" /> 
-        <input v-model="lastName" placeholder="Nachname" />
-        <button type="submit">Registrieren</button>
-      </form>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="register-container">
+        <h2 class="text-center mb-4">Registrieren</h2>
+        <form @submit.prevent="register">
+          <div class="mb-3">
+            <input 
+              v-model="username" 
+              type="text" 
+              class="form-control"
+              placeholder="Benutzername" 
+              required 
+            />
+          </div>
+          <div class="mb-3">
+            <input 
+              v-model="password" 
+              type="password" 
+              class="form-control"
+              placeholder="Passwort" 
+              required 
+            />
+          </div>
+          <div class="mb-3">
+            <input 
+              v-model="firstName" 
+              type="text" 
+              class="form-control" 
+              placeholder="Vorname" 
+            /> 
+          </div>
+          <div class="mb-3">
+            <input 
+              v-model="lastName"
+              type="text" 
+              class="form-control"  
+              placeholder="Nachname" 
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Registrieren</button>
+        </form>
+      </div>
     </div>
   </template>
   
+<style scoped>
+/* Container für das Registrierungsformular */
+.register-container {
+  background-color: #dbdbdb;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+/* Stellt sicher, dass der gesamte Bildschirm genutzt wird */
+.vh-100 {
+  height: 100vh;
+}
+</style>
   

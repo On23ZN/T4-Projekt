@@ -36,19 +36,33 @@ export default {
 
 <template>
   <!-- Einzelnes Listenelement für eine Aufgabe -->
-  <li>
+  <li class="d-flex align-items-center justify-content-between mb-2 p-2 border rounded bg-light shadow-sm">
     <!-- Text der Aufgabe, mit einem CSS-Klasse-Bindung, wenn die Aufgabe erledigt ist -->
-    <span :class="{ completed: todo.completed }">{{ todo.text }}</span>
+    <span :class="{ completed: todo.completed }" class="fw-bold">{{ todo.text }}</span>
     <!-- Button zum Umschalten des Erledigt-Status -->
-    <button @click="toggleComplete">Erledigt</button>
+    <div>
+    <button 
+      @click="toggleComplete" 
+      class="btn btn-success btn-sm me-2"
+    >
+      {{ todo.completed ? 'Nicht Erledigt' : 'Erledigt' }}
+    </button>
+
     <!-- Button zum Löschen der Aufgabe, löst ein benutzerdefiniertes Event aus -->
-    <button @click="$emit('deleteToDo')">Löschen</button>
+    <button 
+      @click="$emit('deleteToDo')" 
+      class="btn btn-danger btn-sm"
+    >
+      Löschen
+    </button>
+  </div>
   </li>
 </template>
 
-<style>
+<style scoped>
 /* CSS-Klasse für erledigte Aufgaben */
 .completed {
   text-decoration: line-through; /* Durchstreichen des Textes */
+  color: gray;
 }
 </style>

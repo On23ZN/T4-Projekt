@@ -38,13 +38,46 @@
   </script>
 
   <template>
-    <div>
-      <h2>Login</h2>
-      <form @submit.prevent="login">
-        <input v-model="username" placeholder="Benutzername" required />
-        <input v-model="password" type="password" placeholder="Passwort" required />
-        <button type="submit">Login</button>
-      </form>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="login-container">
+        <h2 class="text-center mb-4">Login</h2>
+        <form @submit.prevent="login">
+          <div class="mb-3">
+            <input 
+              v-model="username" 
+              type="text" 
+              class="form-control" 
+              placeholder="Benutzername" 
+              required 
+            />
+          </div>
+          <div class="mb-3">
+            <input 
+              v-model="password" 
+              type="password" 
+              class="form-control" 
+              placeholder="Passwort" 
+              required 
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
     </div>
   </template>
+
+<style scoped>
+/* Container für das Login-Formular */
+.login-container {
+  background-color: #dbdbdb;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+/* Stellt sicher, dass der gesamte Bildschirm genutzt wird */
+.vh-100 {
+  height: 100vh;
+}
+</style>
   

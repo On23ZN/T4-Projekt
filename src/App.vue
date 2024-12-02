@@ -68,18 +68,70 @@ export default {
   <div id="app">
    
     <!-- Navigation für Login und Registrierung --> 
-    <nav> 
-      <router-link v-if="!isLoggedIn" to="/login">Login</router-link> 
-      <router-link v-if="!isLoggedIn" to="/register">Registrieren</router-link>
-      <router-link v-if="isLoggedIn" to="/todos">To-Do-Liste</router-link> 
-      <button v-if="isLoggedIn" @click="logout">Logout</button>
-    </nav> 
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow mb-4 fixed-top"> 
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Meine Todos</a>
+        <button 
+          class="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarNav" 
+          aria-controls="navbarNav" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item" v-if="!isLoggedIn">
+              <router-link class="nav-link" to="/login">Login</router-link>
+            </li>
+            <li class="nav-item" v-if="!isLoggedIn">
+              <router-link class="nav-link" to="/register">Registrieren</router-link>
+            </li>
+            <li class="nav-item" v-if="isLoggedIn">
+              <button class="btn btn-outline-danger nav-link" @click="logout">Logout</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <!-- Router-View für die Anzeige der aktuellen Route --> 
     <router-view :userId="userId"></router-view>
-
-    <button type="submit" class="btn btn-primary mb-3">Test</button>
   </div>
 </template>
 
+<style scoped>
+/* Allgemeiner Stil für die Navigation */
+.navbar {
+  background-color: #dbdbdb;
+  border-radius: 8px;
+}
 
+/* Schatteneffekt für die Navigation */
+.navbar-light {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling für die Nav-Links */
+.nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+/* Logout-Button Anpassung */
+.btn-outline-danger {
+  border: 1px solid #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+</style>

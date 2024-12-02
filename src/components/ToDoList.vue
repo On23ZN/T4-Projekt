@@ -142,29 +142,64 @@ export default {
 
 <template>
   <!-- Hauptcontainer der To-Do-Liste -->
-  <div>
-    <!-- Eingabefeld für neue Aufgaben -->
-    <input 
-      v-model="newToDo" 
-      placeholder="Neue Aufgabe hinzufügen" 
-      @keyup.enter="addToDo" 
-    />
-    <!-- Button zum Hinzufügen einer neuen Aufgabe -->
-    <button @click="addToDo">Hinzufügen</button>
-
-    <!-- Liste aller Aufgaben, jede Aufgabe wird als ToDoItem-Komponente dargestellt -->
-    <!-- Iteration über alle Aufgaben -->
-     <!-- Einzigartiger Schlüssel für jedes Element in der Liste -->
-     <!-- Übergibt die aktuelle Aufgabe als Prop an die ToDoItem-Komponente -->
-     <!-- Event zum Löschen einer Aufgabe -->
-    <ul>
-      <ToDoItem
-        v-for="(todo, index) in todos" 
-        :key="todo.id" 
-        :todo="todo" 
-        @deleteToDo="deleteToDo(index)" 
-        @toggleComplete="toggleComplete(todo.id, !todo.completed)"
-      />
-    </ul>
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="todo-container">
+      <h2 class="text-center mb-4">Aufgabenliste</h2>
+      <form @submit.prevent="addToDo" class="mb-4">
+        <!-- Eingabefeld für neue Aufgaben -->
+        <div class="input-group mb-3">
+          <input 
+            v-model="newToDo" 
+            type="text" 
+            class="form-control" 
+            placeholder="Neue Aufgabe hinzufügen"
+            required  
+          />
+          <!-- Button zum Hinzufügen einer neuen Aufgabe -->
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+          >
+            Hinzufügen
+          </button>
+        </div>
+      </form>
+      <!-- Liste aller Aufgaben, jede Aufgabe wird als ToDoItem-Komponente dargestellt -->
+      <!-- Iteration über alle Aufgaben -->
+      <!-- Einzigartiger Schlüssel für jedes Element in der Liste -->
+      <!-- Übergibt die aktuelle Aufgabe als Prop an die ToDoItem-Komponente -->
+      <!-- Event zum Löschen einer Aufgabe -->
+      <ul class="list-group">
+        <ToDoItem
+         v-for="(todo, index) in todos" 
+          :key="todo.id" 
+          :todo="todo" 
+          @deleteToDo="deleteToDo(index)" 
+          @toggleComplete="toggleComplete(todo.id, !todo.completed)"
+        />
+      </ul>
+    </div>
   </div>
 </template>
+
+<style scoped>
+/* Container für die Aufgabenliste */
+.todo-container {
+  background-color: #dbdbdb;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+/* Höhe des Containers */
+.vh-100 {
+  height: 100vh;
+}
+
+/* Aufgabenliste-Element */
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>
