@@ -5,7 +5,12 @@ export default {
   // Props sind Eingaben für die Komponente
   props: {
     // Die aktuelle Aufgabe, die als Objekt übergeben wird
-    todo: Object
+    todo: Object,
+    
+    userId: { 
+      type: Number, 
+      required: true
+    } 
   },
   // Methoden, um die Aufgabe zu verwalten
   methods: {
@@ -16,7 +21,7 @@ export default {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: new URLSearchParams({ id: this.todo.id, completed: this.todo.completed ? 0 : 1 })
+          body: new URLSearchParams({ id: this.todo.id, completed: this.todo.completed ? 0 : 1, user_id: this.userId })
         });
 
         const data = await response.json();

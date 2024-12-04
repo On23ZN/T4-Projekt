@@ -11,6 +11,7 @@ export default {
   },
   // Empfangen der Benutzer-ID als Prop 
   props: { 
+    
     userId: { 
       type: Number, 
       required: true
@@ -52,7 +53,7 @@ export default {
         // Überprüfe, ob die Aufgabe erfolgreich erstellt wurde
         if (data.message) {
           // Fügt eine neue Aufgabe zur Liste hinzu
-          this.todos.push({ text: this.newToDo, completed: false });
+          this.todos.push({ id: data.todo_id, text: this.newToDo, completed: false });
           // Leert das Eingabefeld
           this.newToDo = '';
         } else {
@@ -71,7 +72,13 @@ export default {
     async getTodos() {
       try {
         // Get-Anfrage an Backend senden, um die Aufgabe abzurufen
-        const response = await fetch('http://localhost/T4-Projekt/backend/getTodos.php');
+        const response = await fetch('http://localhost/T4-Projekt/backend/getTodos.php', {
+        method: 'POST', 
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded' 
+        }, 
+        body: new URLSearchParams({ user_id: this.userId }) 
+      });
         //Überprüfen, war Antwort erfolgreich
         if (!response.ok) {
           throw new Error('Netzwerkantwort war nicht ok');
@@ -109,7 +116,7 @@ export default {
           headers: {
              'Content-Type': 'application/x-www-form-urlencoded'  
           },
-          body: new URLSearchParams({ id: todo.id }) 
+          body: new URLSearchParams({ id: todo.id, user_id: this.userId }) 
         });
 
         // Überprüfe, ob die Antwort erfolgreich war 
@@ -135,7 +142,11 @@ export default {
   },
   mounted() {
   // Aufgaben abrufen, wenn die Komponente geladen wird
-  this.getTodos();
+    if (this.userId) {
+      this.getTodos();
+    } else {
+    console.error('Benutzer-ID ist null. Todos können nicht geladen werden.');
+    }
   }
 };
 </script>
@@ -174,6 +185,7 @@ export default {
          v-for="(todo, index) in todos" 
           :key="todo.id" 
           :todo="todo" 
+          :userId="userId" 
           @deleteToDo="deleteToDo(index)" 
           @toggleComplete="toggleComplete(todo.id, !todo.completed)"
         />

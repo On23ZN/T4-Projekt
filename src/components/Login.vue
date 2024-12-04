@@ -26,6 +26,7 @@
             alert('Login erfolgreich');
             this.$router.push('/todos');
             this.$root.isLoggedIn = true; // Setze den Login-Status in der Hauptkomponente
+            this.$root.userId = data.user_id; // Speichere die Benutzer-ID im Frontend
           } else {
             alert('Fehler beim Login: ' + data.error);
           }
