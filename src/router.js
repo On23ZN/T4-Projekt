@@ -17,7 +17,9 @@ import Register from '@/components/Register.vue';
     { 
       path: '/todos', 
       name: 'ToDoList', 
-      component: ToDoList 
+      component: ToDoList
+    
+      
     }, 
     { 
       path: '/:catchAll(.*)*',

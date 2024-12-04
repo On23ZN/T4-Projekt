@@ -20,20 +20,6 @@ export default {
     };
   },
   methods: { 
-  async checkLoginStatus() {
-    try {
-      // Überprüfe den Login-Status (z.B. durch Überprüfung der Session oder eines Tokens)
-      const response = await fetch('http://localhost/T4-Projekt/backend/checkLoginStatus.php', {
-        method: 'GET',
-        credentials: 'include'
-      });
-      const data = await response.json();
-      this.isLoggedIn = data.isLoggedIn;
-      this.userId = data.userId; // Benutzer-ID setzen
-    } catch (error) {
-      console.error('Fehler beim Überprüfen des Login-Status:', error);
-    }
-  },
   async logout() { 
     try {
       // Beende die Session und leite den Benutzer zur Login-Seite weiter 
@@ -57,9 +43,6 @@ export default {
     }
   } 
 },
-  mounted() { 
-    this.checkLoginStatus(); // Überprüfe den Login-Status beim Laden der Komponente 
-  }
 };
 </script>
 
@@ -99,7 +82,8 @@ export default {
     </nav>
 
     <!-- Router-View für die Anzeige der aktuellen Route --> 
-    <router-view :userId="userId"></router-view>
+    <router-view :userId="userId" />
+    
   </div>
 </template>
 
